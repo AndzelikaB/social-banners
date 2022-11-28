@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DomToImage } from 'dom-to-image';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -38,5 +40,14 @@ export class AppComponent {
       height: `${this.height}px`,
       backgroundImage: `linear-gradient(to bottom, ${this.color1} ${this.percentColor1}%, ${this.color2} ${this.percentColor2}%)`,
     };
+  }
+
+  setLayout(selectedLayout: any) {
+    Object.keys(this.layout).forEach((key) => (this.layout[key] = false));
+    this.layout[selectedLayout] = true;
+  }
+
+  saveImage(element: HTMLDivElement) {
+    DomToImage.toBlob(element).then((blob: any) => saveAs(blob));
   }
 }
